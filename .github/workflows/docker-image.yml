@@ -1,18 +1,11 @@
-name: Docker Image CI
+FROM quay.io/gurusensei/gurubhay:latest
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+RUN git clone https://github.com/SilvaTechB/silva-md-bot /root/sylivanus
 
-jobs:
+WORKDIR /root/sylivanus/
 
-  build:
+RUN npm install --platform=linuxmusl
 
-    runs-on: ubuntu-latest
+EXPOSE 5000
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+CMD ["npm", "start"]
